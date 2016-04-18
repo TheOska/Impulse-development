@@ -15,4 +15,10 @@
     <string name="navview_header_default_image_content_description">Default</string>
     <string name="placeholder_email_address">theoska@outlook.com</string>
     <string name="account_user_name">TheOska</string>
+    <string name="item_name_chat">Doctor Chat</string>
+    <string name="item_drugs_remind">Drugs remind</string>
+    <string name="item_ill_history">Mileage</string>
+    <string name="item_my_profolio">My family portfolio</string>
+    <string name="item_dotoc_paper">Electric Doctor Paper</string>
+    <string name="item_setting">Setting</string>
 </resources>

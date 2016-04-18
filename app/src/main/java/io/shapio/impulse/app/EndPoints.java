@@ -1,5 +1,8 @@
 package io.shapio.impulse.app;
 
+
+import android.util.Log;
+
 /**
  * Created by TheOska  on 27/03/16.
  */

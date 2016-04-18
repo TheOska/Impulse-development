@@ -48,6 +48,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="io.shapio.impulse.activity.MainActivity" />
         </activity>
+        <activity android:name=".activity.ChatDoctorActivity"
+            android:label="Doctor Chat"
+            android:parentActivityName="io.shapio.impulse.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <!-- START Added for GCM -->
         <receiver
@@ -61,13 +66,13 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name=".gcm.GcmIntentService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-            </intent-filter>
-        </service>
+        <!--<service-->
+            <!--android:name=".gcm.GcmIntentService"-->
+            <!--android:exported="false">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.google.android.gms.iid.InstanceID" />-->
+            <!--</intent-filter>-->
+        <!--</service>-->
 
         <!-- END Added for GCM -->
     </application>

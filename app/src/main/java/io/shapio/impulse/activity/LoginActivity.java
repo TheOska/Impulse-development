@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         if (!validateEmail()) {
             return;
         }
-
+        Log.v("4/17",   EndPoints.LOGIN);
         final String name = inputName.getText().toString();
         final String email = inputEmail.getText().toString();
 

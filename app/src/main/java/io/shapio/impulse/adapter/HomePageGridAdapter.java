@@ -1,6 +1,8 @@
 package io.shapio.impulse.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import io.shapio.impulse.R;
+import io.shapio.impulse.activity.ChatDoctorActivity;
 import io.shapio.impulse.model.HomePageItem;
 
 /**
@@ -27,12 +30,10 @@ public class HomePageGridAdapter  extends RecyclerView.Adapter<HomePageGridAdapt
     private LinearLayout gotRowTags;
     private boolean isButtomSheet;
 
-    private TextView gotTag1, gotTag2, gotTag3, responseNum;
 
     public HomePageGridAdapter(Context context, ArrayList<HomePageItem> data) {
         this.context = context;
         this.data = data;
-        this.isButtomSheet = isButtomSheet;
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -83,9 +84,11 @@ public class HomePageGridAdapter  extends RecyclerView.Adapter<HomePageGridAdapt
                     public void onClick(View v) {
                         HomePageItem current = data.get(getPosition());
                         Log.v("wish", "clicked image " + current.getItemName());
-                        Snackbar.make(v, "Added type tag " + current.getItemName(), Snackbar.LENGTH_SHORT).show();
-                        gotTag1.setVisibility(View.VISIBLE);
-                        gotTag1.setText("# " + current.getItemName());
+                        Snackbar.make(v, "Clicked  " + current.getItemName(), Snackbar.LENGTH_SHORT).show();
+                        if ( current.getItemName().equals(context.getResources().getString(R.string.item_name_chat))){
+                            Log.i("oscar","in");
+                                context.startActivity(new Intent(context, ChatDoctorActivity.class));
+                        }
                     }
                 });
             }

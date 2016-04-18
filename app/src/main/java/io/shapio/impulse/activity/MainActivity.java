@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void initRecyclerView() {
         homePageRecyclerView = (RecyclerView) findViewById(R.id.grid_type_recycler);
-        mAdapter = new HomePageGridAdapter(this.getApplication(), arrayListHomePageItem);
+        mAdapter = new HomePageGridAdapter(this, arrayListHomePageItem);
         mLayoutManager = new GridLayoutManager(this.getApplication(), 2);
         mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         homePageRecyclerView.setLayoutManager(mLayoutManager);
@@ -79,7 +79,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initHomePageItem() {
-        String[] iconName = {"Doctor Chat", "Drugs remind", "Mileage", "My family portfolio", "Electric Doctor Paper ", "Setting"};
+        String[] iconName = {
+                getResources().getString(R.string.item_name_chat),
+                getResources().getString(R.string.item_drugs_remind),
+                getResources().getString(R.string.item_ill_history),
+                getResources().getString(R.string.item_my_profolio),
+                getResources().getString(R.string.item_dotoc_paper),
+                getResources().getString(R.string.item_setting)
+        };
         Integer[] icon = {R.drawable.bg_circle,
                 R.drawable.bg_circle,
                 R.drawable.bg_circle,

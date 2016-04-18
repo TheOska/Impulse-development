@@ -68,7 +68,7 @@ public class ChatDoctorActivity extends AppCompatActivity implements NavigationV
             launchLoginActivity();
         }
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_doctor_chat);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
