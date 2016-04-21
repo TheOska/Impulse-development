@@ -53,7 +53,11 @@
             android:parentActivityName="io.shapio.impulse.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
+        <activity android:name=".activity.IllHistoryActivity"
+            android:label="Ill History"
+            android:parentActivityName="io.shapio.impulse.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <!-- START Added for GCM -->
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"

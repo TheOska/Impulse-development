@@ -1,55 +1,28 @@
 package io.shapio.impulse.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import io.shapio.impulse.R;
-import io.shapio.impulse.adapter.ChatRoomsAdapter;
 import io.shapio.impulse.adapter.HomePageGridAdapter;
-import io.shapio.impulse.app.Config;
-import io.shapio.impulse.app.EndPoints;
 import io.shapio.impulse.app.MyApplication;
-//import info.androidhive.gcm.gcm.GcmIntentService;
-//import info.androidhive.gcm.gcm.NotificationUtils;
-import io.shapio.impulse.helper.SimpleDividerItemDecoration;
-import io.shapio.impulse.model.ChatRoom;
 import io.shapio.impulse.model.HomePageItem;
-import io.shapio.impulse.model.Message;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
+    private String TAG = MainActivity.class.getSimpleName();
 
     private RecyclerView.Adapter mAdapter;
     private GridLayoutManager mLayoutManager;
@@ -120,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(mToolbar);
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -130,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onPause() {
         super.onPause();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -173,4 +146,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
