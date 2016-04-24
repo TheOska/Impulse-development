@@ -38,7 +38,7 @@ public class IllHistoryAdapter extends RecyclerView.Adapter<IllHistoryAdapter.My
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // get the root of the custom row
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_homepage_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_ill_history_item, parent, false);
 
         // pass the view to the view holder
         MyViewHolder holder = new MyViewHolder(view);
@@ -53,7 +53,7 @@ public class IllHistoryAdapter extends RecyclerView.Adapter<IllHistoryAdapter.My
         IllHistoryItem current = data.get(position);
 
         holder.diseaseName.setText(data.get(position).getDiseaseName());
-        holder.diseaseDesc.setText(data.get(position).getDiseaseDesc());
+//        holder.diseaseDesc.setText(data.get(position).getDiseaseDesc());
         holder.date.setText(data.get(position).getDate());
     }
 
@@ -77,7 +77,7 @@ public class IllHistoryAdapter extends RecyclerView.Adapter<IllHistoryAdapter.My
         public MyViewHolder(View itemView) {
             super(itemView);
             diseaseName = (TextView) itemView.findViewById(R.id.disease_name);
-            diseaseDesc = (TextView) itemView.findViewById(R.id.disease_desc);
+//            diseaseDesc = (TextView) itemView.findViewById(R.id.disease_desc);
             date = (TextView) itemView.findViewById(R.id.create_date);
 //            itemIcon.setOnClickListener(new View.OnClickListener() {
 //                    @Override

@@ -1,12 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" >
+<items version="2" />
 
-    <item
-        jar="C:\github\Shapio\Impulse\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        revision="23.0.2"
-        sha1="fa0b4c0e7df97abfa8a1b1b210ebca9754033f1d">
-        <dex dex="C:\github\Shapio\Impulse\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_64778fc7ecd09014b19fe90363a22e43137f4d33\classes.dex" />
-    </item>
-
-</items>

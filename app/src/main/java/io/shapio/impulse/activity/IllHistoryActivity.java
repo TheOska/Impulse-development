@@ -56,14 +56,16 @@ public class IllHistoryActivity extends AppCompatActivity implements NavigationV
     }
 
     private void initRecyclerView() {
-        illHistoryRecyclerView = (RecyclerView) findViewById(R.id.ill_history_recycler_view);
         arrayListIllHistory = new ArrayList<>();
-        mAdapter = new IllHistoryAdapter(this, arrayListIllHistory);
         fetchIllHistory();
+        mAdapter = new IllHistoryAdapter(this, arrayListIllHistory);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        illHistoryRecyclerView = (RecyclerView) findViewById(R.id.ill_history_recycler_view);
         illHistoryRecyclerView.setLayoutManager(layoutManager);
-        illHistoryRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//        illHistoryRecyclerView.setItemAnimator(new DefaultItemAnimator());
         illHistoryRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+
     }
 
     private void initDrawer() {
@@ -139,38 +141,42 @@ public class IllHistoryActivity extends AppCompatActivity implements NavigationV
     }
 
     private void fetchIllHistory() {
+
         StringRequest strReq = new StringRequest(Request.Method.GET,
                 EndPoints.ALL_ILL_HISTORY_MESSAGE, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
-                Log.e(TAG, "response: " + response);
-
+                Log.v("oskackh", "response: " + response);
                 try {
                     JSONObject obj = new JSONObject(response);
 
                     // check for error flag
                     if (obj.getBoolean("error") == false) {
                         JSONArray illHistoryJsonArray = obj.getJSONArray("ill_history");
-                        Log.v("21.4", illHistoryJsonArray.toString());
+                        Log.v("oskackh", "in fetch response");
                         for (int i = 0; i < illHistoryJsonArray.length(); i++) {
                             JSONObject illHistoryObj = (JSONObject) illHistoryJsonArray.get(i);
                             IllHistoryItem illHistoryItem = new IllHistoryItem();
-
+                            Log.v("kkkh", illHistoryObj.getString("disease_name"));
                             illHistoryItem.setDiseaseName(illHistoryObj.getString("disease_name"));
                             illHistoryItem.setDate(illHistoryObj.getString("create_date"));
-                            illHistoryItem.setDiseaseDesc(illHistoryObj.getString(" "));
+//                            illHistoryItem.setDiseaseDesc(illHistoryObj.getString("disease_desc"));
 
                             arrayListIllHistory.add(illHistoryItem);
+                            Log.v("oskackh", "end");
+
                         }
 
                     } else {
                         // error in fetching chat rooms
+                        Log.v("oskackh", "error");
+
                         Toast.makeText(getApplicationContext(), "" + obj.getJSONObject("error").getString("message"), Toast.LENGTH_LONG).show();
                     }
 
                 } catch (JSONException e) {
-                    Log.e(TAG, "json parsing error: " + e.getMessage());
+                    Log.e("oskackh", "json parsing error: " + e.getMessage());
                     Toast.makeText(getApplicationContext(), "Json parse error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
@@ -184,7 +190,7 @@ public class IllHistoryActivity extends AppCompatActivity implements NavigationV
             @Override
             public void onErrorResponse(VolleyError error) {
                 NetworkResponse networkResponse = error.networkResponse;
-                Log.e(TAG, "Volley error: " + error.getMessage() + ", code: " + networkResponse);
+                Log.e("oskackh", "Volley error: " + error.getMessage() + ", code: " + networkResponse);
                 Toast.makeText(getApplicationContext(), "Volley error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
