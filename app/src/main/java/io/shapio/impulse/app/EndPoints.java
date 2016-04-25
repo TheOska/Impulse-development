@@ -9,7 +9,7 @@ import android.util.Log;
 public class EndPoints {
 
     // localhost url
-     public static final String BASE_URL = "http://192.168.0.105/gcm_chat/v1";
+     public static final String BASE_URL = "http://175.159.69.15/gcm_chat/v1";
 
 //    public static final String BASE_URL = "http://192.168.0.102/gcm_chat/v1";
     public static final String LOGIN = BASE_URL + "/user/login";

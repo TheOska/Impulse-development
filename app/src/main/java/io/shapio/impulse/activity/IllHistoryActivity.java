@@ -161,6 +161,7 @@ public class IllHistoryActivity extends AppCompatActivity implements NavigationV
                             Log.v("kkkh", illHistoryObj.getString("disease_name"));
                             illHistoryItem.setDiseaseName(illHistoryObj.getString("disease_name"));
                             illHistoryItem.setDate(illHistoryObj.getString("create_date"));
+                            illHistoryItem.setIllID(illHistoryObj.getString("history_id"));
 //                            illHistoryItem.setDiseaseDesc(illHistoryObj.getString("disease_desc"));
 
                             arrayListIllHistory.add(illHistoryItem);

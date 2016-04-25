@@ -55,6 +55,7 @@ public class IllHistoryAdapter extends RecyclerView.Adapter<IllHistoryAdapter.My
         holder.diseaseName.setText(data.get(position).getDiseaseName());
 //        holder.diseaseDesc.setText(data.get(position).getDiseaseDesc());
         holder.date.setText(data.get(position).getDate());
+        holder.id.setText(data.get(position).getIllID());
     }
 
 
@@ -72,13 +73,14 @@ public class IllHistoryAdapter extends RecyclerView.Adapter<IllHistoryAdapter.My
 
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView diseaseName, diseaseDesc, date;
+        TextView diseaseName, diseaseDesc, date, id;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             diseaseName = (TextView) itemView.findViewById(R.id.disease_name);
 //            diseaseDesc = (TextView) itemView.findViewById(R.id.disease_desc);
             date = (TextView) itemView.findViewById(R.id.create_date);
+            id = (TextView) itemView.findViewById(R.id.ill_id);
 //            itemIcon.setOnClickListener(new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {

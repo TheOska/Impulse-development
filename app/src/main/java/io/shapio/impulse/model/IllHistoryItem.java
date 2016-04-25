@@ -7,6 +7,15 @@ public class IllHistoryItem {
     String date;
     String diseaseName;
     String diseaseDesc;
+    String illID;
+
+    public void setIllID(String illID) {
+        this.illID = illID;
+    }
+
+    public String getIllID() {
+        return illID;
+    }
 
     public void setDate(String date) {
         this.date = date;
