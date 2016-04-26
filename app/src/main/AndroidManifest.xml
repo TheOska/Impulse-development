@@ -72,6 +72,13 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+        <activity
+            android:name=".activity.IndividualPortfolioActivity"
+            android:label="Tai Man"
+            android:parentActivityName="io.shapio.impulse.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
 
         <!-- START Added for GCM -->
         <receiver

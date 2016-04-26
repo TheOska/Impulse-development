@@ -1,6 +1,7 @@
 package io.shapio.impulse.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,10 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import io.shapio.impulse.R;
+import io.shapio.impulse.activity.DashboardActivity;
+import io.shapio.impulse.activity.IndividualPortfolioActivity;
 import io.shapio.impulse.model.User;
 
 /**
@@ -78,17 +82,8 @@ public class FamilyMemberGridAdapter extends RecyclerView.Adapter<FamilyMemberGr
             memberIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        HomePageItem current = data.get(getPosition());
-//                        Log.v("wish", "clicked image " + current.getItemName());
-//                        Snackbar.make(v, "Clicked  " + current.getItemName(), Snackbar.LENGTH_SHORT).show();
-//                        if ( current.getItemName().equals(context.getResources().getString(R.string.item_name_chat))){
-//                            Log.i("oscar","in");
-//                                context.startActivity(new Intent(context, ChatDoctorActivity.class));
-//                        }
-//                        if (current.getItemName().equals(context.getResources().getString(R.string.item_ill_history))){
-//                            Log.i("oscar","in");
-//                            context.startActivity(new Intent(context, IllHistoryActivity.class));
-//                        }
+                        context.startActivity(new Intent(context, IndividualPortfolioActivity.class));
+                        Toast.makeText(context.getApplicationContext(),"test",Toast.LENGTH_LONG).show();
                     }
                 });
             }
