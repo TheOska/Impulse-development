@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -49,10 +51,7 @@ public class IndividualPortfolioActivity extends AppCompatActivity implements Na
         setContentView(R.layout.activity_individual);
         initToolbar();
         initDrawer();
-
-        Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse("http://telegram.me/impulsehk_bot"));
-
-        startActivity(browse);
+        initButton();
 
     }
 
@@ -74,6 +73,16 @@ public class IndividualPortfolioActivity extends AppCompatActivity implements Na
         setSupportActionBar(mToolbar);
     }
 
+    private void initButton() {
+        RelativeLayout contact = (RelativeLayout) findViewById(R.id.contact_layout);
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse("http://telegram.me/impulsehk_bot"));
+                startActivity(browse);
+            }
+        });
+    }
 
     @Override
     protected void onResume() {

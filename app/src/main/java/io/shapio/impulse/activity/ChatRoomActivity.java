@@ -40,6 +40,7 @@ import io.shapio.impulse.app.Config;
 import io.shapio.impulse.app.EndPoints;
 import io.shapio.impulse.app.MyApplication;
 import io.shapio.impulse.gcm.NotificationUtils;
+import io.shapio.impulse.model.ChatRoom;
 import io.shapio.impulse.model.Message;
 import io.shapio.impulse.model.User;
 
@@ -87,14 +88,29 @@ public class ChatRoomActivity extends AppCompatActivity {
 
         // self user id is to identify the message owner
         String selfUserId = MyApplication.getInstance().getPrefManager().getUser().getId();
-
+        Log.v("selfUserID",chatRoomId);
         mAdapter = new ChatRoomThreadAdapter(this, messageArrayList, selfUserId);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+        recyclerView.addOnItemTouchListener(new ChatRoomThreadAdapter.RecyclerTouchListener(getApplicationContext(), recyclerView, new ChatRoomThreadAdapter.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
 
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Toast.makeText(getApplicationContext(),"test"+ messageArrayList.get(position).getMessage().toString(),Toast.LENGTH_LONG).show();
+                Bundle itemBundle = new Bundle();
+                Intent intentToAddDetail = new Intent(ChatRoomActivity.this, AddToillHistory.class);
+                itemBundle.putString("disease_name", messageArrayList.get(position).getMessage().toString());
+                intentToAddDetail.putExtras(itemBundle);
+                startActivity(intentToAddDetail);
+            }
+        }));
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

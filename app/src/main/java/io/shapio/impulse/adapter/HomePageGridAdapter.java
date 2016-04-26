@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import io.shapio.impulse.R;
 import io.shapio.impulse.activity.ChatDoctorActivity;
+import io.shapio.impulse.activity.FamilyPortfolio;
 import io.shapio.impulse.activity.IllHistoryActivity;
 import io.shapio.impulse.model.HomePageItem;
 
@@ -93,6 +94,11 @@ public class HomePageGridAdapter  extends RecyclerView.Adapter<HomePageGridAdapt
                         if (current.getItemName().equals(context.getResources().getString(R.string.item_ill_history))){
                             Log.i("oscar","in");
                             context.startActivity(new Intent(context, IllHistoryActivity.class));
+                        }
+                        if(current.getItemIcon().equals(context.getResources().getString(R.string.item_my_profolio)))
+                        {
+                            Log.i("oscar","in");
+                            context.startActivity(new Intent(context, FamilyPortfolio.class));
                         }
                     }
                 });

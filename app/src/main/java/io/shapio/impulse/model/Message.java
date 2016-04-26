@@ -6,8 +6,8 @@ import java.io.Serializable;
  * Created by TheOska  on 27/03/16.
  */
 public class Message implements Serializable {
-    String id, message, createdAt;
-    User user;
+    private String id, message, createdAt;
+    private User user;
 
     public Message() {
     }

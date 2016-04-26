@@ -1,11 +1,17 @@
 package io.shapio.impulse.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,6 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import io.shapio.impulse.R;
+import io.shapio.impulse.activity.AddToillHistory;
 import io.shapio.impulse.model.Message;
 
 /**
@@ -23,7 +30,7 @@ import io.shapio.impulse.model.Message;
 public class ChatRoomThreadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static String TAG = ChatRoomThreadAdapter.class.getSimpleName();
-
+    Message message;
     private String userId;
     private int SELF = 100;
     private static String today;
@@ -84,7 +91,7 @@ public class ChatRoomThreadAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        Message message = messageArrayList.get(position);
+        message = messageArrayList.get(position);
         ((ViewHolder) holder).message.setText(message.getMessage());
 
         String timestamp = getTimeStamp(message.getCreatedAt());
@@ -118,6 +125,65 @@ public class ChatRoomThreadAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         return timestamp;
+    }
+
+
+    public interface ClickListener {
+        void onClick(View view, int position);
+
+        void onLongClick(View view, int position);
+    }
+
+    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
+
+        private GestureDetector gestureDetector;
+        private ChatRoomThreadAdapter.ClickListener clickListener;
+
+        public RecyclerTouchListener(final Context context, final RecyclerView recyclerView, final ChatRoomThreadAdapter.ClickListener clickListener) {
+            this.clickListener = clickListener;
+            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
+                    if (child != null && clickListener != null) {
+                        Log.v("25/4","inside");
+                        clickListener.onLongClick(child, recyclerView.getChildPosition(child));
+                    }
+
+//                    Bundle itemBundle = new Bundle();
+//                    Intent intentToDetail = new Intent(context, AddToillHistory.class);
+//                    itemBundle.putString("disease_name", );
+//                    intentToDetail.putExtras(itemBundle);
+//                    context.startActivity(intentToDetail);
+
+                    Log.v("oskackh", "on long click");
+                }
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            View child = rv.findChildViewUnder(e.getX(), e.getY());
+            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
+                clickListener.onClick(child, rv.getChildPosition(child));
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
     }
 }
 
