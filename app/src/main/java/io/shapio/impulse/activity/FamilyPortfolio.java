@@ -28,10 +28,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import io.shapio.impulse.R;
-import io.shapio.impulse.adapter.HomePageGridAdapter;
+import io.shapio.impulse.adapter.FamilyMemberGridAdapter;
 import io.shapio.impulse.app.EndPoints;
 import io.shapio.impulse.app.MyApplication;
-import io.shapio.impulse.model.HomePageItem;
+import io.shapio.impulse.model.User;
 
 public class FamilyPortfolio extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -39,9 +39,12 @@ public class FamilyPortfolio extends AppCompatActivity implements NavigationView
 
     private RecyclerView.Adapter mAdapter;
     private GridLayoutManager mLayoutManager;
-    private RecyclerView homePageRecyclerView;
-    private ArrayList<HomePageItem> arrayListHomePageItem;
-
+    private RecyclerView familyMemberRecyclerView;
+    private ArrayList<User> arrayListFamilyMember;
+    private Integer[] icon = {
+            R.drawable.bg_circle,
+            R.drawable.bg_circle,
+            R.drawable.bg_circle};
     private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,41 +53,88 @@ public class FamilyPortfolio extends AppCompatActivity implements NavigationView
         initToolbar();
         initDrawer();
         initHomePageItem();
+        fetchFamilyMember();
 //        fetchIllHistory();
         initRecyclerView();
     }
 
+    private void fetchFamilyMember() {
+
+        Log.v("oskackh", "in fetch");
+
+        StringRequest strReq = new StringRequest(Request.Method.GET,
+                EndPoints.ALL_FAMILY_MEMBER, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.e("oskackh", "response: " + response);
+                try {
+                    JSONObject obj = new JSONObject(response);
+
+                    // check for error flag
+                    if (obj.getBoolean("error") == false) {
+                        JSONArray familyMemberJsonArray = obj.getJSONArray("family_members");
+                        Log.v("oskackh", familyMemberJsonArray.toString());
+                        for (int i = 0; i < familyMemberJsonArray.length(); i++) {
+                            JSONObject illHistoryObj = (JSONObject) familyMemberJsonArray.get(i);
+                            User userItem = new User();
+
+                            userItem.setName(illHistoryObj.getString("user_id"));
+                            userItem.setMemberIcon(icon[1]);
+                            arrayListFamilyMember.add(userItem);
+                        }
+
+                    } else {
+                        // error in fetching chat rooms
+                        Log.v("oskackh", "error");
+                        Toast.makeText(getApplicationContext(), "" + obj.getJSONObject("error").getString("message"), Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (JSONException e) {
+                    Log.e("oskackh", "json parsing error: " + e.getMessage());
+                    Toast.makeText(getApplicationContext(), "Json parse error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+                mAdapter.notifyDataSetChanged();
+
+                // subscribing to all chat room topics
+//                subscribeToAllTopics();
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                Log.e("oskackh", "Volley error: " + error.getMessage() + ", code: " + networkResponse);
+                Toast.makeText(getApplicationContext(), "Volley error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //Adding request to request queue
+        MyApplication.getInstance().addToRequestQueue(strReq);
+
+    }
+
     private void initRecyclerView() {
-        homePageRecyclerView = (RecyclerView) findViewById(R.id.grid_type_recycler);
-        mAdapter = new HomePageGridAdapter(this, arrayListHomePageItem);
+        familyMemberRecyclerView = (RecyclerView) findViewById(R.id.grid_type_recycler);
+        mAdapter = new FamilyMemberGridAdapter(this, arrayListFamilyMember);
         mLayoutManager = new GridLayoutManager(this.getApplication(), 2);
         mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
-        homePageRecyclerView.setLayoutManager(mLayoutManager);
-        homePageRecyclerView.setAdapter(mAdapter);
+        familyMemberRecyclerView.setLayoutManager(mLayoutManager);
+        familyMemberRecyclerView.setAdapter(mAdapter);
 
-        homePageRecyclerView.setHasFixedSize(true);
+        familyMemberRecyclerView.setHasFixedSize(true);
     }
 
     private void initHomePageItem() {
-        String[] iconName = {
-                getResources().getString(R.string.item_name_chat),
-                getResources().getString(R.string.item_drugs_remind),
-                getResources().getString(R.string.item_ill_history),
-                getResources().getString(R.string.item_my_profolio),
-                getResources().getString(R.string.item_dotoc_paper),
-                getResources().getString(R.string.item_setting)
-        };
-        Integer[] icon = {R.drawable.bg_circle,
-                R.drawable.bg_circle,
-                R.drawable.bg_circle,
-                R.drawable.bg_circle};
-        arrayListHomePageItem = new ArrayList<HomePageItem>();
-        for (int i = 0; i < 6; i++) {
-            HomePageItem homePageItem = new HomePageItem();
-            homePageItem.setItemIcon(icon[i]);
-            homePageItem.setItemName(iconName[i]);
-            arrayListHomePageItem.add(i, homePageItem);
-        }
+
+//        arrayListHomePageItem = new ArrayList<HomePageItem>();
+//        for (int i = 0; i < 6; i++) {
+//            HomePageItem homePageItem = new HomePageItem();
+//            homePageItem.setItemIcon(icon[i]);
+//            homePageItem.setItemName(iconName[i]);
+//            arrayListHomePageItem.add(i, homePageItem);
+//        }
     }
 
     private void initDrawer() {
@@ -160,60 +210,5 @@ public class FamilyPortfolio extends AppCompatActivity implements NavigationView
     }
 
     private void fetchIllHistory() {
-        Log.v("oskackh", "in fetch");
-
-        StringRequest strReq = new StringRequest(Request.Method.GET,
-                EndPoints.ALL_ILL_HISTORY_MESSAGE, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                Log.e("oskackh", "response: " + response);
-                try {
-                    JSONObject obj = new JSONObject(response);
-
-                    // check for error flag
-                    if (obj.getBoolean("error") == false) {
-                        JSONArray illHistoryJsonArray = obj.getJSONArray("ill_history");
-                        Log.v("oskackh", illHistoryJsonArray.toString());
-//                        for (int i = 0; i < illHistoryJsonArray.length(); i++) {
-//                            JSONObject illHistoryObj = (JSONObject) illHistoryJsonArray.get(i);
-//                            IllHistoryItem illHistoryItem = new IllHistoryItem();
-//
-//                            illHistoryItem.setDiseaseName(illHistoryObj.getString("disease_name"));
-//                            illHistoryItem.setDate(illHistoryObj.getString("create_date"));
-//                            illHistoryItem.setDiseaseDesc(illHistoryObj.getString(" "));
-//
-//                            arrayListIllHistory.add(illHistoryItem);
-//                        }
-
-                    } else {
-                        // error in fetching chat rooms
-                        Log.v("oskackh", "error");
-
-                        Toast.makeText(getApplicationContext(), "" + obj.getJSONObject("error").getString("message"), Toast.LENGTH_LONG).show();
-                    }
-
-                } catch (JSONException e) {
-                    Log.e("oskackh", "json parsing error: " + e.getMessage());
-                    Toast.makeText(getApplicationContext(), "Json parse error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-
-                mAdapter.notifyDataSetChanged();
-
-                // subscribing to all chat room topics
-//                subscribeToAllTopics();
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                NetworkResponse networkResponse = error.networkResponse;
-                Log.e("oskackh", "Volley error: " + error.getMessage() + ", code: " + networkResponse);
-                Toast.makeText(getApplicationContext(), "Volley error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //Adding request to request queue
-        MyApplication.getInstance().addToRequestQueue(strReq);
     }
 }

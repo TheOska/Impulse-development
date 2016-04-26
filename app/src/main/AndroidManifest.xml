@@ -85,6 +85,11 @@
             android:parentActivityName="io.shapio.impulse.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity android:name=".activity.FamilyPortfolio"
+            android:label="Family Portfolio"
+            android:parentActivityName="io.shapio.impulse.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

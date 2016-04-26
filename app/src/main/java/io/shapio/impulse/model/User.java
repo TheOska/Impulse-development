@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
     String id, name, email;
-
+    Integer memberIcon;
     public User() {
     }
 
@@ -15,6 +15,14 @@ public class User implements Serializable {
         this.id = id;
         this.name = name;
         this.email = email;
+    }
+
+    public void setMemberIcon(Integer memberIcon) {
+        this.memberIcon = memberIcon;
+    }
+
+    public Integer getMemberIcon() {
+        return memberIcon;
     }
 
     public String getId() {

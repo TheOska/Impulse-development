@@ -21,4 +21,7 @@
     <string name="item_my_profolio">My family portfolio</string>
     <string name="item_dotoc_paper">Electric Doctor Paper</string>
     <string name="item_setting">Setting</string>
+    <string name="son">son</string>
+    <string name="mother">mother</string>
+    <string name="father">father</string>
 </resources>
