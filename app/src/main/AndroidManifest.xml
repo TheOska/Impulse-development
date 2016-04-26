@@ -63,6 +63,13 @@
             android:label="Dashboard"
             android:parentActivityName="io.shapio.impulse.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".activity.IndividualPortfolioActivity"
+            android:label="Tai Man"
+            android:parentActivityName="io.shapio.impulse.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
