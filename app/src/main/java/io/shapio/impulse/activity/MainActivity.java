@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getResources().getString(R.string.item_drugs_remind),
                 getResources().getString(R.string.item_ill_history),
                 getResources().getString(R.string.item_my_profolio),
-                getResources().getString(R.string.item_dotoc_paper),
+                getResources().getString(R.string.item_dashboard),
                 getResources().getString(R.string.item_setting)
         };
         Integer[] icon = {R.drawable.bg_circle,
