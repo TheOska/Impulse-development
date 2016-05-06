@@ -24,4 +24,5 @@
     <string name="son">son</string>
     <string name="mother">mother</string>
     <string name="father">father</string>
+    <string name="bot_weather">Sha Tin: 3: Low</string>
 </resources>

@@ -51,8 +51,9 @@ import io.shapio.impulse.model.User;
 public class ChatRoomActivity extends AppCompatActivity {
 
     private String TAG = ChatRoomActivity.class.getSimpleName();
-
+    private String botResponse;
     private String chatRoomId;
+    private String BOT_WEATHER = "/weather";
     private RecyclerView recyclerView;
     private ChatRoomThreadAdapter mAdapter;
     private ArrayList<Message> messageArrayList;
@@ -172,7 +173,6 @@ public class ChatRoomActivity extends AppCompatActivity {
      * */
     private void sendMessage() {
         final String message = this.inputMessage.getText().toString().trim();
-
         if (TextUtils.isEmpty(message)) {
             Toast.makeText(getApplicationContext(), "Enter a message", Toast.LENGTH_SHORT).show();
             return;
@@ -246,6 +246,108 @@ public class ChatRoomActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("user_id", MyApplication.getInstance().getPrefManager().getUser().getId());
                 params.put("message", message);
+
+                Log.e(TAG, "Params: " + params.toString());
+
+                return params;
+            };
+        };
+
+
+        // disabling retry policy so that it won't make
+        // multiple http calls
+        int socketTimeout = 0;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+
+        strReq.setRetryPolicy(policy);
+
+        //Adding request to request queue
+        MyApplication.getInstance().addToRequestQueue(strReq);
+        if(message.equals(BOT_WEATHER))
+        {
+            Log.i("oska","in side bot");
+            handleBotResponse(message);
+        }
+
+    }
+
+    private void handleBotResponse(final String receiveMessage) {
+
+        String endPoint = EndPoints.CHAT_ROOM_MESSAGE.replace("_ID_", chatRoomId);
+
+        if(receiveMessage.equals(BOT_WEATHER))
+        {
+            botResponse = getResources().getString(R.string.bot_weather).toString();
+        }
+        Log.e(TAG, "endpoint: " + endPoint);
+
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                endPoint, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, "response: " + response);
+
+                try {
+                    JSONObject obj = new JSONObject(response);
+
+                    // check for error
+                    if (obj.getBoolean("error") == false) {
+
+                        JSONObject commentObj = obj.getJSONObject("message");
+
+                        String commentId = commentObj.getString("message_id");
+                        String commentText = commentObj.getString("message");
+                        String createdAt = commentObj.getString("created_at");
+
+                        JSONObject userObj = obj.getJSONObject("user");
+                        String userId = userObj.getString("user_id");
+                        String userName = userObj.getString("name");
+                        User user = new User(userId, userName, null);
+
+                        Message message = new Message();
+                        message.setId(commentId);
+                        message.setMessage(commentText);
+                        message.setCreatedAt(createdAt);
+                        message.setUser(user);
+
+                        messageArrayList.add(message);
+
+
+                        mAdapter.notifyDataSetChanged();
+                        if (mAdapter.getItemCount() > 1) {
+                            // scrolling to bottom of the recycler view
+                            recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, mAdapter.getItemCount() - 1);
+                        }
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), "" + obj.getString("message"), Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (JSONException e) {
+                    Log.e(TAG, "json parsing error: " + e.getMessage());
+                    Toast.makeText(getApplicationContext(), "json parse error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                Log.e(TAG, "Volley error: " + error.getMessage() + ", code: " + networkResponse);
+                Toast.makeText(getApplicationContext(), "Volley error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                inputMessage.setText(receiveMessage);
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_id", "37");
+                params.put("message", botResponse);
 
                 Log.e(TAG, "Params: " + params.toString());
 

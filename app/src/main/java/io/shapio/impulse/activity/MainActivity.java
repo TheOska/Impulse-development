@@ -32,7 +32,6 @@ import io.shapio.impulse.adapter.HomePageGridAdapter;
 import io.shapio.impulse.app.EndPoints;
 import io.shapio.impulse.app.MyApplication;
 import io.shapio.impulse.model.HomePageItem;
-import io.shapio.impulse.model.IllHistoryItem;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -75,12 +74,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getResources().getString(R.string.item_dashboard),
                 getResources().getString(R.string.item_setting)
         };
-        Integer[] icon = {R.drawable.bg_circle,
-                R.drawable.bg_circle,
-                R.drawable.bg_circle,
-                R.drawable.bg_circle,
-                R.drawable.bg_circle,
-                R.drawable.bg_circle};
+        Integer[] icon = {R.drawable.ic_hearing_white_24dp,
+                R.drawable.ic_remainder,
+                R.drawable.ic_history,
+                R.drawable.ic_family_profolio,
+                R.drawable.ic_dashboard_white_24dp,
+                R.drawable.ic_settings_white_24dp};
         arrayListHomePageItem = new ArrayList<HomePageItem>();
         for (int i = 0; i < 6; i++) {
             HomePageItem homePageItem = new HomePageItem();
