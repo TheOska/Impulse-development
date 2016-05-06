@@ -8,7 +8,7 @@
         android:id="@+id/profile"
         android:layout_width="match_parent"
         android:layout_height="192dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="?attr/actionBarSize"
         android:background="#ED7D6B">
 
         <ImageView
@@ -17,7 +17,7 @@
             android:layout_height="128dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="32dp"
-            android:src="@drawable/ic_media_play"
+            android:src="@drawable/ic_person_black_48dp"
             android:tint="#000000" />
 
         <RelativeLayout
@@ -69,10 +69,51 @@
     </RelativeLayout>
 
     <!-- step chart -->
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/profile" />
+        android:layout_below="@id/profile"
+        android:elevation="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/steps_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/steps"
+                android:gravity="center"
+                android:text=" Steps"
+
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_below="@id/steps_tv"
+                android:layout_marginTop="4dp"
+                android:elevation="5dp" />
+
+            <TextView
+                android:id="@+id/glucose_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/chart"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/blood"
+                android:gravity="center"
+                android:text=" Glucose"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

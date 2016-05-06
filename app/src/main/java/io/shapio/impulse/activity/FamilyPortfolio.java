@@ -1,7 +1,13 @@
 package io.shapio.impulse.activity;
 
+import android.app.admin.SystemUpdatePolicy;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.preference.Preference;
+import android.provider.Settings;
+import android.support.annotation.IdRes;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,12 +26,20 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnMenuTabClickListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mcsoxford.rss.RSSFeed;
+import org.mcsoxford.rss.RSSItem;
+import org.mcsoxford.rss.RSSReader;
+import org.mcsoxford.rss.RSSReaderException;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import io.shapio.impulse.R;
 import io.shapio.impulse.adapter.FamilyMemberGridAdapter;
@@ -42,16 +56,40 @@ public class FamilyPortfolio extends AppCompatActivity implements NavigationView
     private RecyclerView familyMemberRecyclerView;
     ArrayList<User> arrayListFamilyMember;
     private Toolbar mToolbar;
+
+    private BottomBar mBottomBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_family_porfolio);
         initToolbar();
-        initDrawer();
+//        initDrawer();
         initHomePageItem();
-//        fetchFamilyMember();
-//        fetchIllHistory();
-        initRecyclerView();
+        fetchFamilyMember();
+        fetchIllHistory();
+//        initRecyclerView();
+
+        mBottomBar = BottomBar.attach(this, savedInstanceState);
+        mBottomBar.setItemsFromMenu(R.menu.bottombar_menu, new OnMenuTabClickListener() {
+                    @Override
+                    public void onMenuTabSelected(@IdRes int menuItemId) {
+
+                    }
+
+                    @Override
+                    public void onMenuTabReSelected(@IdRes int menuItemId) {
+
+                    }
+                });
+
+                // Setting colors for different tabs when there's more than three of them.
+                // You can set colors for tabs in three different ways as shown below.
+                mBottomBar.mapColorForTab(0, ContextCompat.getColor(this, R.color.colorAccent));
+
+        mBottomBar.noTopOffset();
+        mBottomBar.useDarkTheme();
+//        /
     }
 
     private void fetchFamilyMember() {
