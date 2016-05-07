@@ -39,5 +39,5 @@ dependencies {
     // RSS
     compile 'com.github.ahorn:android-rss:99290c4dd9'
     // BottomBar
-//    compile 'com.roughike:bottom-bar:1.1.8'
+//    compile 'com.roughike:bottom-bar:1.3.3'
 }
