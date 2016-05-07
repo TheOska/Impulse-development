@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initRecyclerView() {
         homePageRecyclerView = (RecyclerView) findViewById(R.id.grid_type_recycler);
         mAdapter = new HomePageGridAdapter(this, arrayListHomePageItem);
-        mLayoutManager = new GridLayoutManager(this.getApplication(), 2);
-        mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        mLayoutManager = new GridLayoutManager(this.getApplication(), 2,GridLayoutManager.VERTICAL,false);
+//        mLayoutManager.setOrientation();
         homePageRecyclerView.setLayoutManager(mLayoutManager);
         homePageRecyclerView.setAdapter(mAdapter);
 
